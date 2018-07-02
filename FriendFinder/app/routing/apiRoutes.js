@@ -1,7 +1,18 @@
-const connection = require("../server.js");
+const friends = require("./app/data/friends.js");
 
 
-module.export = function (app) {
+module.exports = function(app) {
+    
+    app.get("/api/friends/", function(req, res) {
+       // var chosen = req.params.friend;
+        console.log(res);
+       // console.log(chosen);
+        return res.json(friends);
+  
+        
+        //return res.json(false);
+    });
+  
 // Displays a single friend, or returns false
     app.get("/api/friends/:friend", function(req, res) {
         var chosen = req.params.friend;
@@ -9,14 +20,15 @@ module.export = function (app) {
         console.log(chosen);
   
         for (var i = 0; i < friends.length; i++) {
-        if (chosen === friends[i].routeName) {
-         return res.json(friends[i]);
+              if (chosen === friends[i].routeName) {
+                 return res.json(friends[i]);
             }
         }
   
         return res.json(false);
     });
-  
+
+   
   // Create New friends - takes in JSON input
      app.post("/api/friends", function(req, res) {
          var newfriend = req.body;
@@ -28,4 +40,7 @@ module.export = function (app) {
   
          res.json(newfriend);
      });
-  }
+
+    };
+    
+  
